@@ -1,0 +1,71 @@
+
+
+	class Node
+	{
+		int data;
+		Node left = null, right = null;
+
+		Node(int data) {
+			this.data = data;
+		}
+	}
+
+	public class Main {
+		// finding the two common parent
+		public static boolean twoParent(Node root, int node)
+		{
+			
+			if (root == null) {
+				return false;
+			}
+
+			
+			if (root.data == node) {
+				return true;
+			}
+
+			// search node in left subtree
+			boolean left = twoParent(root.left, node);
+
+			// search node in right subtree
+			boolean right = false;
+			if (!left) {
+				right = twoParent(root.right, node);
+			}
+
+			// if given node is found in either left or right subtree,
+			// current node is an parent of given node
+			if (left || right) {
+				System.out.print(root.data + " ");
+			}
+
+			
+			return left || right;
+		}
+
+		
+		public static void main(String[] args)
+		{
+			/* for exaample
+					  1
+					/   \
+				   /     \
+				  2       3
+				   \     / \
+					4   5   6
+					   
+					 
+			*/
+
+			Node root = new Node(1);
+			root.left = new Node(2);
+			root.right = new Node(3);
+			root.left.right = new Node(4);
+			root.right.left = new Node(5);
+			root.right.right = new Node(6);
+			
+			int node = 6;
+			twoParent(root, node);
+		}
+	}
+
